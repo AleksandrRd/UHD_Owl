@@ -19,7 +19,8 @@
 #include <uhd/types/stream_cmd.hpp>
 #include <uhd/usrp/dboard_eeprom.hpp>
 #include <uhd/usrp/dboard_manager.hpp>
-#include <uhd/usrp/gps_ctrl.hpp>
+///#include <uhd/usrp/gps_ctrl.hpp>
+#include <uhdlib/usrp/gps_ctrl.hpp>
 #include <uhd/usrp/subdev_spec.hpp>
 #include <uhd/utils/pimpl.hpp>
 #include <uhdlib/usrp/cores/gpio_core_200.hpp>

@@ -138,7 +138,7 @@ void kintex7sdr_impl::set_mb_eeprom(const std::string& mb, const mboard_eeprom_t
         iface->write_eeprom(N200_EEPROM_ADDR,
             offsetof(n200_eeprom_map, mac_addr),
             mac_addr_t::from_string(mb_eeprom["mac-addr"]).to_bytes());
-
+/*
     if (mb_eeprom.has_key("ip-addr")) {
         byte_vector_t ip_addr_bytes(4);
         byte_copy(
@@ -162,6 +162,31 @@ void kintex7sdr_impl::set_mb_eeprom(const std::string& mb, const mboard_eeprom_t
         byte_copy(
             boost::asio::ip::address_v4::from_string(mb_eeprom["gateway"]).to_bytes(),
             ip_addr_bytes);
+        iface->write_eeprom(
+            N200_EEPROM_ADDR, offsetof(n200_eeprom_map, gateway), ip_addr_bytes);
+    }
+*/
+
+    if (mb_eeprom.has_key("ip-addr")) {
+        byte_vector_t ip_addr_bytes(4);
+        auto addr = boost::asio::ip::make_address_v4(mb_eeprom["ip-addr"]);
+        byte_copy(addr.to_bytes(), ip_addr_bytes);
+        iface->write_eeprom(
+            N200_EEPROM_ADDR, offsetof(n200_eeprom_map, ip_addr), ip_addr_bytes);
+    }
+
+    if (mb_eeprom.has_key("subnet")) {
+        byte_vector_t ip_addr_bytes(4);
+        auto addr = boost::asio::ip::make_address_v4(mb_eeprom["subnet"]);
+        byte_copy(addr.to_bytes(), ip_addr_bytes);
+        iface->write_eeprom(
+            N200_EEPROM_ADDR, offsetof(n200_eeprom_map, subnet), ip_addr_bytes);
+    }
+
+    if (mb_eeprom.has_key("gateway")) {
+        byte_vector_t ip_addr_bytes(4);
+        auto addr = boost::asio::ip::make_address_v4(mb_eeprom["gateway"]);
+        byte_copy(addr.to_bytes(), ip_addr_bytes);
         iface->write_eeprom(
             N200_EEPROM_ADDR, offsetof(n200_eeprom_map, gateway), ip_addr_bytes);
     }
